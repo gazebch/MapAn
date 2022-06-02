@@ -1,19 +1,16 @@
-﻿using MapAn;
-
-namespace MapAn
+﻿namespace Anim
 {
     public class Map
     {
-        //List<Anim.Anim> CatalogAnimals = new List<Anim.Anim>();
         public static int[,] mapedit(int x, int y) //создание карты
         {
             var rand = new Random();
-            int[,] result = new int[x, y];
+            var result = new int[x, y];
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
-                    int chance = rand.Next(1, 11);    
+                    var chance = rand.Next(1, 11);    
                     if (chance == 1)   
                         result[i, j] = 2;// дерево
                     else if (chance > 1 && chance < 5)
@@ -39,7 +36,7 @@ namespace MapAn
 
         public static int[] standmap(int[,] map, int rows, int columns, int atr) // установка первоначального положения объектов на карте
         {
-            int[] result = new int[2];
+            var result = new int[2];
             while (true)
             {
                 var x = Program.rand(rows);
@@ -54,10 +51,10 @@ namespace MapAn
             return result;
         }
 
-        public static void Posonmap(int[,] map, int rows, int columns, List<Anim.Anim> CatalogAnimals) // отрисовывает объекты на карте
+        public static void Posonmap(int[,] map, int rows, int columns, List<Anim> CatalogAnimals) // отрисовывает объекты на карте
         {
-            int[][] vs = new int[CatalogAnimals.Count()][];
-            string[] names = new string[CatalogAnimals.Count()];
+            var vs = new int[CatalogAnimals.Count()][];
+            var names = new string[CatalogAnimals.Count()];
             for (int i = 0; i < vs.Length; i++) 
             {
                 vs[i] = CatalogAnimals[i].position;
@@ -67,8 +64,8 @@ namespace MapAn
             {
                 for (var j = 0; j < columns; j++)
                 {
-                    bool qwe = true;
-                    int t = 0;
+                    var qwe = true;
+                    var t = 0;
                     foreach (var tt in vs)
                     {
                         
@@ -87,7 +84,7 @@ namespace MapAn
             
         }
 
-        public static bool exam(List<Anim.Anim> CatalogAnimals, int[] pos, int tick, int atr)
+        public static bool exam(List<Anim> CatalogAnimals, int[] pos, int tick, int atr)
         {            
             for (int i = 0; i < CatalogAnimals.Count; i++)
             {
@@ -101,14 +98,14 @@ namespace MapAn
             return true;
         }
 
-        public static void motion(List<Anim.Anim> CatalogAnimals, int rows, int columns, int[,] map)
+        public static void motion(List<Anim> CatalogAnimals, int rows, int columns, int[,] map)
         {
             
             for (int i = 0; i < CatalogAnimals.Count; i++)
             {
-                int[] basis = new int[2];
-                int x = CatalogAnimals[i].position[0] + CatalogAnimals[i].Move();
-                int y = CatalogAnimals[i].position[1] + CatalogAnimals[i].Move();
+                var basis = new int[2];
+                var x = CatalogAnimals[i].position[0] + CatalogAnimals[i].Move();
+                var y = CatalogAnimals[i].position[1] + CatalogAnimals[i].Move();
                 basis[0] = x;
                 basis[1] = y;
                 if (x < rows && y < columns && x >= 0 && y >= 0 && // проверка на границы

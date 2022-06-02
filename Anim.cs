@@ -1,6 +1,4 @@
-﻿using MapAn;
-
-namespace Anim
+﻿namespace Anim
 {
     public class Anim : IMoveb
     {

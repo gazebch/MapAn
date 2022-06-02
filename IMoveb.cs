@@ -1,4 +1,4 @@
-﻿namespace MapAn
+﻿namespace Anim
 {
     public interface IMoveb
     {
