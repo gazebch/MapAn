@@ -4,7 +4,6 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("asdsad");
             var rand = new Random();
             List<Anim> CatalogAnimals = new List<Anim>();
             var x = int.Parse(Test());
