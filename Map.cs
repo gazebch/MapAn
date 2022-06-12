@@ -2,7 +2,7 @@
 {
     public class Map
     {
-        public static int[,] mapedit(int x, int y) //создание карты
+        public static int[,] MapEdit(int x, int y) //создание карты
         {
             var rand = new Random();
             var result = new int[x, y];
@@ -22,7 +22,7 @@
             return result;
         }
         
-        public static void viewmap(int[,] map, int rows, int columns) //просмотр карты
+        public static void ViewMap(int[,] map, int rows, int columns) //просмотр карты
         {
             for (int i = 0; i < rows; i++)
             {
@@ -34,7 +34,7 @@
             }
         }
 
-        public static int[] standmap(int[,] map, int rows, int columns, int atr) // установка первоначального положения объектов на карте
+        public static int[] StandMap(int[,] map, int rows, int columns, int atr) // установка первоначального положения объектов на карте
         {
             var result = new int[2];
             while (true)
@@ -51,65 +51,56 @@
             return result;
         }
 
-        public static void Posonmap(int[,] map, int rows, int columns, List<Anim> CatalogAnimals) // отрисовывает объекты на карте
+        public static void PositionOnMap(int[,] map, int rows, int columns, List<Anim> CatalogAnimals) // отрисовывает объекты на карте
         {
-            var vs = new int[CatalogAnimals.Count()][];
-            var names = new string[CatalogAnimals.Count()];
+            var vs = new int[CatalogAnimals.Count()][]; // массив положений объектов на карте
+            var namesAnimals = new string[CatalogAnimals.Count()]; //массив имен объектов
             for (int i = 0; i < vs.Length; i++) 
             {
                 vs[i] = CatalogAnimals[i].position;
-                names[i] = CatalogAnimals[i].name;
+                namesAnimals[i] = CatalogAnimals[i].name;
             }
             for (int i = 0; i < rows; i++)
             {
                 for (var j = 0; j < columns; j++)
                 {
-                    var qwe = true;
+                    var checkPoint = true;
                     var t = 0;
                     foreach (var tt in vs)
                     {
                         
-                        if (i == tt[0] && j== tt[1])
+                        if (i == tt[0] && j== tt[1])                    // проверка на нахождение обектов в текущих 
                         {
-                            Console.Write($"{names[t][0]} \t");
-                            qwe = false;
+                            Console.Write($"{namesAnimals[t][0]} \t");
+                            checkPoint = false;
                             break;
                         }
                         t++;
                     }
-                    if (qwe) Console.Write($"{map[i, j]} \t");
+                    if (checkPoint) Console.Write($"{map[i, j]} \t");
                 }
                 Console.WriteLine();
-            }
-            
+            }            
         }
 
-        public static bool exam(List<Anim> CatalogAnimals, int[] pos, int tick, int atr)
+        public static bool Exam(List<Anim> CatalogAnimals, int[] pos, int atr) // проверка на столкновение и ландшафт
+        {   
+            var ActiveAn = CatalogAnimals.Where(a => a.position == pos && a.atr == atr); // с помощью linq проверка на столкновения при шаге
+            if (ActiveAn.Count() == 0) return true;
+            else return false;
+        }
+
+        public static void Motion(List<Anim> CatalogAnimals, int rows, int columns, int[,] map) // движение объекта по карте
         {            
             for (int i = 0; i < CatalogAnimals.Count; i++)
             {
-                if (i == tick) continue;
-                if (CatalogAnimals[i].position == pos && CatalogAnimals[i].atr == atr)
-                {
-                    return false;
-                }
-                
-            }
-            return true;
-        }
-
-        public static void motion(List<Anim> CatalogAnimals, int rows, int columns, int[,] map)
-        {
-            
-            for (int i = 0; i < CatalogAnimals.Count; i++)
-            {
-                var basis = new int[2];
+                var basis = new int[2]; // переменная для временных координат
                 var x = CatalogAnimals[i].position[0] + CatalogAnimals[i].Move();
                 var y = CatalogAnimals[i].position[1] + CatalogAnimals[i].Move();
                 basis[0] = x;
                 basis[1] = y;
                 if (x < rows && y < columns && x >= 0 && y >= 0 && // проверка на границы
-                    exam(CatalogAnimals, basis, i, CatalogAnimals[i].atr) && map[x, y] <= CatalogAnimals[i].atr) // проверка на столкновение и ландшафт
+                    Exam(CatalogAnimals, basis, CatalogAnimals[i].atr) && map[x, y] <= CatalogAnimals[i].atr) // проверка на столкновение и ландшафт
                 {
                     CatalogAnimals[i].position = basis;
                 }
