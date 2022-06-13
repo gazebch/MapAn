@@ -85,9 +85,9 @@
 
         public static bool Exam(List<Anim> CatalogAnimals, int[] pos, int atr) // проверка на столкновение и ландшафт
         {   
-            var ActiveAn = CatalogAnimals.Where(a => a.position == pos && a.atr == atr); // с помощью linq проверка на столкновения при шаге
-            if (ActiveAn.Count() == 0) return true;
-            else return false;
+            var ActiveAn = CatalogAnimals.Any(a => a.position == pos && a.atr == atr); // с помощью linq проверка на столкновения при шаге
+            if (ActiveAn) return false;
+            else return true;
         }
 
         public static void Motion(List<Anim> CatalogAnimals, int rows, int columns, int[,] map) // движение объекта по карте
